@@ -1,0 +1,35 @@
+public class MyClass {
+    public static void main(String args[]) {
+        String cpfSemFormatacao = Regex.removerFormatacaoCPF("123.456.789-10");
+        System.out.println("CPF sem formatação: " + cpfSemFormatacao);
+        
+        System.out.println("Valor 1 válido? " + Regex.validarValorBRL("R$ 1000,10"));
+        System.out.println("Valor 2 válido? " + Regex.validarValorBRL("R$0,99"));
+        System.out.println("Valor 3 válido? " + Regex.validarValorBRL("r$123.456,78"));
+        
+        System.out.println("Telefone 1 válido? " + Regex.validarTelefone("(43)35428000"));
+        System.out.println("Telefone 2 válido? " + Regex.validarTelefone("(43)3542 8000"));
+        System.out.println("Telefone 3 válido? " + Regex.validarTelefone("(43) 3542 8000"));
+        System.out.println("Telefone 4 válido? " + Regex.validarTelefone("(43) 3542-8000"));
+        System.out.println("Telefone 5 válido? " + Regex.validarTelefone("(43) 99999-000"));
+    }
+}
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Regex {
+    public static String removerFormatacaoCPF(String cpf){
+        return cpf.replaceAll("[^0-9]", "");
+    }
+    
+    public static boolean validarValorBRL(String valor){
+        String regexBRL = "^(R|r)\\$\\s?\\d{1,3}(\\.\\d{3})*(,\\d{2})?$";
+        return valor.matches(regexBRL);
+    }
+    
+    public static boolean validarTelefone(String telefone){
+        String regexTelefone = "^\\(\\d{2}\\)\\s?\\d{4,5}-?\\d{4}$";
+        return telefone.matches(regexTelefone);
+    }
+}
